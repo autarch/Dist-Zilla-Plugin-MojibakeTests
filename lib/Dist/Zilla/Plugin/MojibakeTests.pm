@@ -8,6 +8,19 @@ use warnings qw(all);
 
 use Moose;
 extends q(Dist::Zilla::Plugin::InlineFiles);
+with q(Dist::Zilla::Role::PrereqSource);
+
+sub register_prereqs {
+    my $self = shift;
+
+    $self->zilla->register_prereqs(
+        {
+            type  => 'requires',
+            phase => 'develop',
+        },
+        'Test::Mojibake' => '0',
+    );
+}
 
 __PACKAGE__->meta->make_immutable;
 no Moose;
